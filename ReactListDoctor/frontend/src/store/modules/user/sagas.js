@@ -28,11 +28,19 @@ export function* updateProfile({ payload }) {
       rest.oldPassword ? rest : {}
     );
 
-    const response = yield call(api.put, 'users', profile);
+    // const response = yield call(api.put, 'users', profile);
 
-    toast.success('Perfil atualizado com sucesso!');
+    // console.log('response: ' + response);
+    // console.log('profile: ' + profile)
 
-    yield put(updateProfileSuccess(response.data));
+    // toast.success('Perfil atualizado com sucesso!');
+
+    // yield put(updateProfileSuccess(response.data));
+    api.put('users', profile).then(resp => {
+      console.log(resp);
+    }).catch(err => {
+      console.log(err.response)
+    })
   } catch (error) {
     const { data } = error.response;
     toast.error(data.error);

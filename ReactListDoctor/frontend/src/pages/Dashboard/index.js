@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import Logo from '../../assets/logo.png';
@@ -9,7 +9,23 @@ import { signOut } from '../../store/modules/auth/actions';
 
 import '../Home/styles.css';
 
+import { useHistory } from 'react-router-dom';
+
+import api from '../../services/api';
+
 export default function Dashboard() {
+
+  const history = useHistory();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token-list')
+
+    if (token) {
+      api.defaults.headers.authorization = `Bearer ${token}`;
+    } else {
+      history.push('/')
+    }
+  }, [])
 
   const dispatch = useDispatch();
 

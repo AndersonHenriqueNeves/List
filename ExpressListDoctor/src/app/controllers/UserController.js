@@ -99,74 +99,74 @@ class UserController {
 
     const user = await User.findByPk(req.userId);
 
-    if(email !== user.email) {
-      const userExists  = await User.findOne({ where: { email } });
+  //   if(email !== user.email) {
+  //     const userExists  = await User.findOne({ where: { email } });
 
-      if(userExists) {
-        return res.status(400).json({ error: 'Email já cadastrado'});
-      }
-    }
+  //     if(userExists) {
+  //       return res.status(400).json({ error: 'Email já cadastrado'});
+  //     }
+  //   }
 
-    if(!req.body.name || typeof req.body.name == undefined || req.body.name == null) {
-      return res.status(401).json({ error: 'O campo de Nome é obrigatório'});
-    }
+  //   if(!req.body.name || typeof req.body.name == undefined || req.body.name == null) {
+  //     return res.status(401).json({ error: 'O campo de Nome é obrigatório'});
+  //   }
 
-    if(!req.body.email || typeof req.body.email == undefined || req.body.email == null) {
-      return res.status(401).json({ error: 'O email é obrigatório'});
-    }
+  //   if(!req.body.email || typeof req.body.email == undefined || req.body.email == null) {
+  //     return res.status(401).json({ error: 'O email é obrigatório'});
+  //   }
 
-    if(!req.body.numberphone || typeof req.body.numberphone == undefined || req.body.numberphone == null) {
-      return res.status(401).json({ error: 'O Número de celular é obrigatório'});
-    }
+  //   if(!req.body.numberphone || typeof req.body.numberphone == undefined || req.body.numberphone == null) {
+  //     return res.status(401).json({ error: 'O Número de celular é obrigatório'});
+  //   }
 
-    if(req.body.numberphone.length > 11 ) {
-      return res.status(401).json({ error: 'A quantidade de números do telefone não pode ser maior que 11'});
-    }
+  //   if(req.body.numberphone.length > 11 ) {
+  //     return res.status(401).json({ error: 'A quantidade de números do telefone não pode ser maior que 11'});
+  //   }
 
-    if(!req.body.cep || typeof req.body.cep == undefined || req.body.cep == null) {
-      return res.status(401).json({ error: 'O campo de CEP é obrigatório'});
-    }
+  //   if(!req.body.cep || typeof req.body.cep == undefined || req.body.cep == null) {
+  //     return res.status(401).json({ error: 'O campo de CEP é obrigatório'});
+  //   }
 
-    if(!req.body.city || typeof req.body.city == undefined || req.body.city == null) {
-      return res.status(401).json({ error: 'O campo de Cidade é obrigatório'});
-    }
+  //   if(!req.body.city || typeof req.body.city == undefined || req.body.city == null) {
+  //     return res.status(401).json({ error: 'O campo de Cidade é obrigatório'});
+  //   }
 
-    if(!req.body.neighborhood || typeof req.body.neighborhood == undefined || req.body.neighborhood == null) {
-      return res.status(401).json({ error: 'O Bairro é obrigatório'});
-    }
+  //   if(!req.body.neighborhood || typeof req.body.neighborhood == undefined || req.body.neighborhood == null) {
+  //     return res.status(401).json({ error: 'O Bairro é obrigatório'});
+  //   }
 
-    if(!req.body.street || typeof req.body.street == undefined || req.body.street == null) {
-      return res.status(401).json({ error: 'A Rua é obrigatória'});
-    }
+  //   if(!req.body.street || typeof req.body.street == undefined || req.body.street == null) {
+  //     return res.status(401).json({ error: 'A Rua é obrigatória'});
+  //   }
 
-    if(!req.body.number || typeof req.body.number == undefined || req.body.number == null) {
-      return res.status(401).json({ error: 'O número é obrigatório'});
-    }
+  //   if(!req.body.number || typeof req.body.number == undefined || req.body.number == null) {
+  //     return res.status(401).json({ error: 'O número é obrigatório'});
+  //   }
 
-    if(!req.body.complement || typeof req.body.complement == undefined || req.body.complement == null) {
-      return res.status(401).json({ error: 'O complemento é obrigatório'});
-    }
+  //   if(!req.body.complement || typeof req.body.complement == undefined || req.body.complement == null) {
+  //     return res.status(401).json({ error: 'O complemento é obrigatório'});
+  //   }
 
-    if(!req.body.reference || typeof req.body.reference == undefined || req.body.reference == null) {
-      return res.status(401).json({ error: 'A Referência é obrigatória'});
-    }
+  //   if(!req.body.reference || typeof req.body.reference == undefined || req.body.reference == null) {
+  //     return res.status(401).json({ error: 'A Referência é obrigatória'});
+  //   }
 
 
-    if (oldPassword && !(await user.checkPassword(oldPassword))) {
-      return res.status(401).json({error: 'Senha antiga errada'});
-    }
+  //   if (oldPassword && !(await user.checkPassword(oldPassword))) {
+  //     return res.status(401).json({error: 'Senha antiga errada'});
+  //   }
 
-    if(oldPassword) {
-    if(req.body.password !== req.body.confirmPassword) {
-      return res.status(401).json({error: 'As senhas não batem'});
-    }
-    }
+  //   if(oldPassword) {
+  //   if(req.body.password !== req.body.confirmPassword) {
+  //     return res.status(401).json({error: 'As senhas não batem'});
+  //   }
+  //   }
 
-    if(oldPassword) {
-    if(req.body.password.length < 6) {
-      return res.status(401).json({ error: 'O campo senha tem que ter no mínimo 6 caracteres'});
-    }
-  }
+  //   if(oldPassword) {
+  //   if(req.body.password.length < 6) {
+  //     return res.status(401).json({ error: 'O campo senha tem que ter no mínimo 6 caracteres'});
+  //   }
+  // }
 
     const { id, name, cep, city, uf, neighborhood, street, number, reference, complement, numberphone  } = await user.update(req.body);
 

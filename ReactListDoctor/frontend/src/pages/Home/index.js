@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import Logo from '../../assets/logo.png';
 
 import { Form, Input } from '@rocketseat/unform';
 
 import './styles.css';
+
+
 
 export default function Home() {
 

@@ -20,6 +20,7 @@ export function* signIn({ payload }) {
   api.defaults.headers.Authorization = `Bearer ${token}`;
 
   localStorage.setItem('token', token);
+  console.log(token);
 
   yield put(signInSuccess(token, user));
 

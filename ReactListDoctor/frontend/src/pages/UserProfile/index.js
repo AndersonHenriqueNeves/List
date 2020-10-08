@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, Input } from '@rocketseat/unform';
 
@@ -10,43 +9,61 @@ import Logo from '../../assets/logo.png';
 
 import './styles.css';
 
-export default function UserProfile() {
+import api from '../../services/api';
 
-  const [newuf, setNewUf] = useState('');
-  
+import { useHistory } from 'react-router-dom';
+
+export default function UserProfile() {
+  const history = useHistory();
+  const [uf, setUf] = useState('');
+  const [nome, setNome] = useState('');
+  const [email, setEmail] = useState('');
+  const [numberphone, setNumberphone] = useState('');
+  const [cep, setCep] = useState('');
+  const [city, setCity] = useState('');
+  const [neighborhood, setNeighborhood] = useState('');
+  const [street, setStreet] = useState('');
+  const [complement, setComplement] = useState('');
+  const [number, setNumber] = useState('');
+  const [reference, setReference] = useState('');
+
   const profile = useSelector(state => state.user.profile);
 
   const dispatch = useDispatch();
- 
-  function handleSubmit(
-    name,
-    cep,
-    numberphone,
-    uf = newuf,
-    city,
-    neighborhood,
-    street,
-    complement,
-    number,
-    reference,
-    email,
-    password
-  ) {
-    dispatch(updateProfileRequest(
-      name,
-      cep,
+
+  useEffect(() => {
+    const token = localStorage.getItem('token-list')
+
+    if (token) {
+      api.defaults.headers.authorization = `Bearer ${token}`;
+    } else {
+      history.push('/')
+    }
+  }, [])
+
+  const handleSubmit = async () => {
+    const info = {
+      nome,
+      email,
       numberphone,
-      uf = newuf,
+      cep,
       city,
       neighborhood,
       street,
       complement,
       number,
       reference,
-      email,
-      password
-    ))
-  } 
+      uf
+    }
+
+    console.log(info);
+
+    await api.put('/users', info).then(resp => {
+      console.log(resp);
+    }).catch(err => {
+      console.log(err.response);
+    });
+  }
 
   function handleSignOut() {
     dispatch(signOut());
@@ -55,7 +72,7 @@ export default function UserProfile() {
   return (
     <>
       <div className="topnav">
-        <img className="Logo" src={Logo} alt="Logo"/>
+        <img className="Logo" src={Logo} alt="Logo" />
         <a className="signOut" onClick={handleSignOut}>Sair</a>
         <a href="#minhaConta">Minha Conta</a>
       </div>
@@ -63,18 +80,19 @@ export default function UserProfile() {
       <div className="containerProfile">
         <Form initialData={profile} onSubmit={handleSubmit} className="containerForm">
           <h4> Configurações de Perfil </h4>
-          <Input className="inputperfil" name="name" placeholder="Nome completo" />
-          <Input className="inputperfil" name="email" placeholder="Seu endereço de e-mail" />
-          <Input className="inputperfil" name="numberphone" placeholder="número de telefone" />
+          <Input className="inputperfil" name="name" placeholder="Nome completo" onChange={e => setNome(e.target.value)} />
+          <Input className="inputperfil" name="email" placeholder="Seu endereço de e-mail" onChange={e => setEmail(e.target.value)} />
+          <Input className="inputperfil" name="numberphone" placeholder="número de telefone" onChange={e => setNumberphone(e.target.value)} />
           <hr />
           <h4> Configurações de Endereço </h4>
-          <Input className="inputperfil" name="cep" placeholder="CEP" />
-          <Input className="inputperfil"name="city" placeholder="Cidade" />
-          <select 
-            name="uf" 
-            defaultValue={profile.uf}
+          <Input className="inputperfil" name="cep" placeholder="CEP" onChange={e => setCep(e.target.value)} />
+          <Input className="inputperfil" name="city" placeholder="Cidade" onChange={e => setCity(e.target.value)} />
+          <select
+            name="uf"
+            // defaultValue={profile.uf}
             className="select"
-            onChange={e => setNewUf(e.target.value)}
+            onChange={e => setUf(e.target.value)}
+          // onChange={e => console.log(e.target.value)}
           >
             <option value="AC">AC</option>
             <option value="AL">AL</option>
@@ -104,15 +122,15 @@ export default function UserProfile() {
             <option value="SE">SE</option>
             <option value="TO">TO</option>
           </select>
-          <Input className="inputperfil" name="neighborhood" placeholder="Bairro" />
-          <Input className="inputperfil" name="street" placeholder="Rua" />
-          <Input className="inputperfil" name="number" placeholder="número" />
-          <Input className="inputperfil" name="reference" placeholder="Referência" />
-          <Input className="inputperfil" name="complement" placeholder="Complemento" />
+          <Input className="inputperfil" name="neighborhood" placeholder="Bairro" onChange={e => setNeighborhood(e.target.value)} />
+          <Input className="inputperfil" name="street" placeholder="Rua" onChange={e => setStreet(e.target.value)} />
+          <Input className="inputperfil" name="number" placeholder="número" onChange={e => setNumber(e.target.value)} />
+          <Input className="inputperfil" name="reference" placeholder="Referência" onChange={e => setReference(e.target.value)} />
+          <Input className="inputperfil" name="complement" placeholder="Complemento" onChange={e => setComplement(e.target.value)} />
           <hr />
           <h4> Configurações de Senha </h4>
           <Input className="inputperfil" type="password" name="oldPassword" placeholder="Sua senha atual" />
-          <Input className="inputperfil" type="password" name="password" placeholder="Nova senha"/>
+          <Input className="inputperfil" type="password" name="password" placeholder="Nova senha" />
           <Input className="inputperfil" type="password" name="confirmPassword" placeholder="Confirmação de senha" />
           <button className="buttonperfil" type="submit">Atualizar Perfil</button>
         </Form>
