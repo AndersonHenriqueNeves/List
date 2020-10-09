@@ -35,10 +35,12 @@ export default function Login() {
 
     if(!email || typeof email == undefined || email == null) {
       handleError('O campo de Email é obrigatório')
+      return
     }
 
     if(!password || typeof password == undefined || password == null) {
       handleError('O campo de Senha é obrigatório')
+      return
     }
 
     console.log(info)

@@ -12,6 +12,9 @@ import Logo from '../../assets/logo.png';
 import '../Login/styles.css';
 import '../RegisterDoctor/styles.css';
 
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
+
 import api from '../../services/api';
 
 export default function LoginProfissional() { 
@@ -20,10 +23,24 @@ export default function LoginProfissional() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
+  function handleError(mensagem) {
+    toast.error(`${mensagem}`)
+  }
+
   const handleSubmit = async () => {
     const info = {
       email,
       password
+    }
+
+    if(!email || typeof email == undefined || email == null) {
+      handleError('O campo de Email é obrigatório')
+      return
+    }
+
+    if(!password || typeof password == undefined || password == null) {
+      handleError('O campo de Senha é obrigatório')
+      return
     }
 
     api.post('/sessions-professionals', info).then(resp => {
@@ -32,8 +49,9 @@ export default function LoginProfissional() {
       localStorage.setItem('token-list-doctor', resp.data.token);
 
       history.push('/dashboard-doctor')
-    }).catch(err => {
-      console.log(err.response);
+    }).catch(error => {
+      const { data } = error.response;
+      handleError(data.error);
     })
 }
 

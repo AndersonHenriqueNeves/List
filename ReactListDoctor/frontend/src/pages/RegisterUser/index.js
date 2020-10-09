@@ -63,54 +63,67 @@ export default function RegisterUser() {
 
       if(!name || typeof name == undefined || name == null) {
         handleError('O nome é obrigatório')
+        return
       }
 
       if(!cpf || typeof cpf == undefined || cpf == null) {
         handleError('O cpf é obrigatório')
+        return
       }
 
       if(!cep || typeof cep == undefined || cep == null) {
         handleError('O cep é obrigatório')
+        return
       }
 
       if(!uf || typeof uf == undefined || uf == null) {
         handleError('O uf é obrigatório')
+        return
       }
 
       if(!city || typeof city == undefined || city == null) {
         handleError('O city é obrigatório')
+        return
       }
 
       if(!neighborhood || typeof neighborhood == undefined || neighborhood == null) {
         handleError('O bairro é obrigatório')
+        return
       }
 
       if(!complement || typeof complement == undefined || complement == null) {
         handleError('O complemento é obrigatório')
+        return
       }
 
       if(!number || typeof number == undefined || number == null) {
         handleError('O número é obrigatório')
+        return
       }
 
       if(!reference || typeof reference == undefined || reference == null) {
         handleError('A referência é obrigatória')
+        return
       }
       
       if(!numberphone || typeof numberphone == undefined || numberphone == null) {
         handleError('O número de celular é obrigatório')
+        return
       }
       
       if(!email || typeof email == undefined || email == null) {
         handleError('O email é obrigatório')
+        return
       }
       
       if(!password || typeof password == undefined || password == null) {
         handleError('A senha é obrigatória')
+        return
       }
       
       if(!street || typeof street == undefined || street == null) {
         handleError('A rua é obrigatória')
+        return
       }
 
       console.log(info)

@@ -8,20 +8,8 @@ class SessionControllerProfissional {
 
     const professional = await Profissional.findOne({ where: { email }});
 
-    if(!req.body.email || typeof req.body.email == undefined || req.body.email == null) {
-      return res.status(401).json({ error: 'O campo email é obrigatório'});
-    }
-
-    if(!req.body.password || typeof req.body.password == undefined || req.body.password == null) {
-      return res.status(401).json({ error: 'O campo senha é obrigatório'});
-    }
-
     if(!professional || professional.disabled == true) {
       return res.status(401).json({error: 'Usuário não encontrado'});
-    }
-
-    if(!professional) {
-      return res.status(401).json({ error: 'Usuário não encontrado'});
     }
 
     if(!(await professional.checkPassword(password))) {
