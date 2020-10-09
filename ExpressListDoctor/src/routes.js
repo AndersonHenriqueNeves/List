@@ -9,6 +9,8 @@ import SessionControllerProfissional from './app/controllers/SessionControllerPr
 import ProfissionalController from './app/controllers/ProfissionalController';
 import FileController from './app/controllers/FileController';
 import OfficeController from './app/controllers/OfficeController';
+import ServiceController from './app/controllers/ServiceController';
+import PaymentController from './app/controllers/PaymentController';
 
 import authMiddleware from './app/middlewares/auth';
 import authProMiddleware from './app/middlewares/authPro';
@@ -24,7 +26,12 @@ routes.post('/files', upload.single('file'), FileController.store)
 
 routes.post('/offices', authProMiddleware, OfficeController.store);
 
+routes.post('/payments', authProMiddleware, PaymentController.store);
+
+routes.post('/services', authProMiddleware, ServiceController.store);
+
 routes.put('/users', authMiddleware ,UserController.update);
+routes.get('/users', authMiddleware, UserController.index);
 routes.post('/users/create_admin', authMiddleware, UserController.createAdmin);
 routes.post('/users/forgot_password', UserController.forgotPassword);
 routes.post('/users/reset_password', UserController.resetPassword);

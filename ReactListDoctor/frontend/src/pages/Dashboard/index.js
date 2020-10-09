@@ -19,6 +19,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     const token = localStorage.getItem('token-list')
+    console.log(token);
 
     if (token) {
       api.defaults.headers.authorization = `Bearer ${token}`;

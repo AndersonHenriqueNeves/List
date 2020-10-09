@@ -11,6 +11,7 @@ import Termos from '../pages/Termos';
 import Privacy from '../pages/Privacy';
 import UserProfile from '../pages/UserProfile';
 import DashboardDoctor from '../pages/DashboardDoctor';
+import LoginProfissional from '../pages/LoginProfissional';
  
 export default function Routes() {
   return (
@@ -21,6 +22,7 @@ export default function Routes() {
         <Route path="/termos" component={Termos} />
         <Route path="/" exact component={Home} />
         <Route path="/login" component={Login} />
+        <Route path="/login-doctor" component={LoginProfissional} />
         <Route path="/dashboard-doctor" component={DashboardDoctor} />
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/user-profile" component={UserProfile}/>
