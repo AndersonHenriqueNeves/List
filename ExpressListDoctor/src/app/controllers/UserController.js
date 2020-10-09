@@ -103,11 +103,12 @@ class UserController {
       return res.status(401).json({ error: 'Usuário não encontrado'});
     }
 
-    const { id, name, cep, city, uf, neighborhood, street, number, reference, complement, numberphone } = user;
+    const { id, name, email, cep, city, uf, neighborhood, street, number, reference, complement, numberphone } = user;
 
     return res.json({
         id, 
-        name, 
+        name,
+        email,
         cep, 
         city, 
         uf, 
@@ -179,6 +180,7 @@ class UserController {
 
 
     if (oldPassword && !(await user.checkPassword(oldPassword))) {
+      console.log(oldPassword);
       return res.status(401).json({error: 'Senha antiga errada'});
     }
 

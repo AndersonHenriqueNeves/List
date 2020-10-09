@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { Form, Input } from '@rocketseat/unform';
 
@@ -8,6 +7,9 @@ import Logo from '../../assets/logo.png';
 import { signUpRequest } from '../../store/modules/auth/actions';
 
 import './styles.css';
+
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 import api from '../../services/api';
 
@@ -30,6 +32,10 @@ export default function RegisterUser() {
   const [password, setPassword] = useState();
   const [street, setStreet] = useState();
 
+  function handleError(mensagem) {
+    toast.error(`${mensagem}`)
+  }
+
   const dispatch = useDispatch();
 
   const history = useHistory();
@@ -38,7 +44,7 @@ export default function RegisterUser() {
     var valid = false;
     if(document.getElementById("checkbox").checked) {
       valid = true;
-
+      
       const info = {
         name,
         cpf: cleanMask(cpf),
@@ -55,14 +61,66 @@ export default function RegisterUser() {
         street
       }
 
+      if(!name || typeof name == undefined || name == null) {
+        handleError('O nome é obrigatório')
+      }
+
+      if(!cpf || typeof cpf == undefined || cpf == null) {
+        handleError('O cpf é obrigatório')
+      }
+
+      if(!cep || typeof cep == undefined || cep == null) {
+        handleError('O cep é obrigatório')
+      }
+
+      if(!uf || typeof uf == undefined || uf == null) {
+        handleError('O uf é obrigatório')
+      }
+
+      if(!city || typeof city == undefined || city == null) {
+        handleError('O city é obrigatório')
+      }
+
+      if(!neighborhood || typeof neighborhood == undefined || neighborhood == null) {
+        handleError('O bairro é obrigatório')
+      }
+
+      if(!complement || typeof complement == undefined || complement == null) {
+        handleError('O complemento é obrigatório')
+      }
+
+      if(!number || typeof number == undefined || number == null) {
+        handleError('O número é obrigatório')
+      }
+
+      if(!reference || typeof reference == undefined || reference == null) {
+        handleError('A referência é obrigatória')
+      }
+      
+      if(!numberphone || typeof numberphone == undefined || numberphone == null) {
+        handleError('O número de celular é obrigatório')
+      }
+      
+      if(!email || typeof email == undefined || email == null) {
+        handleError('O email é obrigatório')
+      }
+      
+      if(!password || typeof password == undefined || password == null) {
+        handleError('A senha é obrigatória')
+      }
+      
+      if(!street || typeof street == undefined || street == null) {
+        handleError('A rua é obrigatória')
+      }
+
       console.log(info)
 
       await api.post('/users', info).then(resp => {
         console.log(resp)
         history.push('/dashboard')
-      }).catch(err => {
-        console.log(err.response)
-        toast.error(err.response.data.error);
+      }).catch(error => {
+        const { data } = error.response;
+        handleError(data.error);
       })
 
     } else {

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, Input } from '@rocketseat/unform';
-import 'react-toastify/dist/ReactToastify.css';
 
 import { useHistory } from 'react-router-dom';
 
@@ -12,6 +11,9 @@ import Logo from '../../assets/logo.png';
 import './styles.css';
 import '../RegisterDoctor/styles.css';
 
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
+
 import api from '../../services/api';
 
 export default function Login() {
@@ -20,10 +22,23 @@ export default function Login() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
+  function handleError(mensagem) {
+    toast.error(`${mensagem}`)
+  }
+
   const handleSubmit = async () => {
+
     const info = {
       email,
       password
+    }
+
+    if(!email || typeof email == undefined || email == null) {
+      handleError('O campo de Email é obrigatório')
+    }
+
+    if(!password || typeof password == undefined || password == null) {
+      handleError('O campo de Senha é obrigatório')
     }
 
     console.log(info)
@@ -34,8 +49,9 @@ export default function Login() {
       localStorage.setItem('token-list', resp.data.token);
 
       history.push('/dashboard')
-    }).catch(err => {
-      console.log(err.response);
+    }).catch(error => {
+        const { data } = error.response;
+        handleError(data.error);
     })
   }
 

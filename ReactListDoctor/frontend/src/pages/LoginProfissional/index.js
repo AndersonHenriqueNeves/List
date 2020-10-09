@@ -29,7 +29,7 @@ export default function LoginProfissional() {
     api.post('/sessions-professionals', info).then(resp => {
       api.defaults.headers.authorization = `Bearer ${resp.data.token}`;
 
-      localStorage.setItem('token-list', resp.data.token);
+      localStorage.setItem('token-list-doctor', resp.data.token);
 
       history.push('/dashboard-doctor')
     }).catch(err => {

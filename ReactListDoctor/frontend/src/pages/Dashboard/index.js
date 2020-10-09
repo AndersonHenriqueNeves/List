@@ -35,7 +35,8 @@ export default function Dashboard() {
   }
 
   function handleSignOut() {
-    dispatch(signOut());
+    localStorage.clear();
+    history.push('/')
   }
 
   return (

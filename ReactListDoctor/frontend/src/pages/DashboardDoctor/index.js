@@ -15,7 +15,7 @@ function DashboardDoctor() {
   const history = useHistory();
 
   useEffect(() => {
-    const token = localStorage.getItem('token-list')
+    const token = localStorage.getItem('token-list-doctor')
 
     if (token) {
       api.defaults.headers.authorization = `Bearer ${token}`;
